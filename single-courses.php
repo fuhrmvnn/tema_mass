@@ -20,29 +20,16 @@ while (have_posts()) : the_post();
 
         <!-- contenido principal -->
         <div class="curso-main">
-
-            <?php
-            // Hook antes del contenido (por si Tutor lo necesita)
-            do_action('tutor_course/single/before/content');
-
-            the_content();
-
-            // Hook después del contenido
-            do_action('tutor_course/single/after/content');
-            ?>
-
+            <h2>Descripción</h2>
+            <?php echo apply_filters('the_content', get_the_content()); ?>
         </div>
 
-        <!-- sidebar -->
         <aside class="curso-sidebar">
-
-            <div class="card-info">
-                <h3>Información del curso</h3>
-                <?php do_action('tutor_course/single/lessons');?>
-
-            </div>
-
+            <h3>Contenido del curso</h3>
+            <?php do_action('tutor_course/single/lessons'); ?>
         </aside>
+
+          
 
     </div>
 
