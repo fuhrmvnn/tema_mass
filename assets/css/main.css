@@ -7,12 +7,6 @@ html, body {
   padding: 0;
   width: 100%;
 }
-
-.site-header,
-.site-footer {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-}
 /***** HEADER *****/
 .site-header {
     background-color: #FFFFFF;
