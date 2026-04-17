@@ -39,5 +39,20 @@ function capacitaciones_assets() {
             true
         );
     }
+      if ( is_page_template('single-courses.php') ) {
+        wp_enqueue_style(
+            'curso-css',
+            get_template_directory_uri() . '/assets/css/curso.css',
+            [],
+            '1.0'
+        );
+        wp_enqueue_script(
+            'curso-temas-js',
+            get_template_directory_uri() . '/assets/js/curso.js',
+            [],
+            '1.0',
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'capacitaciones_assets');

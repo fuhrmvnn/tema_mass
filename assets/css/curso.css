@@ -1,37 +1,38 @@
-.curso-header {
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+.accordion-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background: #fff;
 }
 
-.curso-header .overlay {
-    background: rgba(0,0,0,0.5);
-    height: 100%;
+.accordion-header {
+    padding: 15px;
+    cursor: pointer;
+    font-weight: 500;
     display: flex;
-    align-items: end;
-    padding: 20px;
+    justify-content: space-between;
+    background: #f7f7f7;
 }
 
-.curso-header h1 {
-    color: #fff;
-    margin: 0;
+.accordion-content {
+    display: none;
+    padding: 15px;
+    background: #fafafa;
 }
 
-.curso-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-    padding: 30px;
+.leccion-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
 }
 
-.curso-main {
-    background: #fff;
-}
-
-.curso-sidebar .card-info {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+.btn-quiz {
+    display: block;
+    margin-top: 15px;
+    padding: 10px;
+    background: #cfd8ea;
+    text-align: center;
+    border-radius: 6px;
+    text-decoration: none;
 }

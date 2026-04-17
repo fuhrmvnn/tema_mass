@@ -1,47 +1,41 @@
 <?php
-get_header();
+$course_id = get_the_ID();
+$topics = tutor_utils()->get_topics($course_id);
 
-while (have_posts()) : the_post();
-
-    $course_id = get_the_ID();
-    $thumb = get_the_post_thumbnail_url($course_id, 'full');
+if ($topics) :
+    foreach ($topics as $topic) :
 ?>
 
-<div class="curso-container">
+<div class="accordion-item">
 
-    <!-- portada -->
-    <div class="curso-header" style="background-image:url('<?php echo $thumb; ?>');">
-        <div class="overlay">
-            <h1><?php the_title(); ?></h1>
-        </div>
+    <div class="accordion-header">
+        <?php echo esc_html($topic->post_title); ?>
+        <span class="arrow">⌄</span>
     </div>
 
-    <div class="curso-content">
+    <div class="accordion-content">
 
-        <!-- contenido principal -->
-        <div class="curso-main">
+        <?php
+        $contents = tutor_utils()->get_topic_contents($topic->term_id);
 
-            <?php do_action('tutor_course/single/before/main_content'); ?>
+        if ($contents) :
+            foreach ($contents as $item) :
+        ?>
 
-                <h2>Descripción</h2>
-                <?php echo apply_filters('the_content', get_the_content()); ?>
+            <div class="leccion-item">
+                <?php echo esc_html($item->post_title); ?>
+            </div>
 
-        </div>
+        <?php endforeach; endif; ?>
 
-        <aside class="curso-sidebar">
-
-            <h3>Contenido del curso</h3>
-
-            <?php do_action('tutor_course/single/lessons'); ?>
-
-        </aside>
-
-          
+        <!-- botón quiz (simulado o dinámico) -->
+        <a href="#" class="btn-quiz">Ir al Quiz</a>
 
     </div>
 
 </div>
 
-<?php endwhile;
-
-get_footer();
+<?php
+    endforeach;
+endif;
+?>
