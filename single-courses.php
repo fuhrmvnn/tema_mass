@@ -32,7 +32,7 @@ while (have_posts()) : the_post();
 
             <h3>Contenido del curso</h3>
 
-            <?php do_action('tutor_course/single/lessons'); ?>
+            <?php do_action('tutor_course/courses/lessons'); ?>
 
         </aside>
 
