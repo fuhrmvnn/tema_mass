@@ -1,6 +1,16 @@
 * {
   font-family: 'Inter', sans-serif;
-  outline: 1px solid red;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.site-header,
+.site-footer {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 }
 /***** HEADER *****/
 .site-header {
