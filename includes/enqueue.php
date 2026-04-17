@@ -23,7 +23,7 @@ function capacitaciones_assets() {
         'nonce' => wp_create_nonce('pe_nonce')
     ]);
 
-    // ── Login (solo en page-login.php) ──
+    // ── Login ──
     if ( is_page_template('page-login.php') ) {
         wp_enqueue_style(
             'mass-login',
@@ -31,9 +31,29 @@ function capacitaciones_assets() {
             [],
             '1.0'
         );
+
         wp_enqueue_script(
             'mass-login-js',
             get_template_directory_uri() . '/assets/js/login.js',
+            [],
+            '1.0',
+            true
+        );
+    }
+
+    // 🔥 CURSOS (AQUÍ ESTABA EL PROBLEMA)
+    if ( is_singular('single-courses') ) {
+
+        wp_enqueue_style(
+            'curso-css',
+            get_template_directory_uri() . '/assets/css/curso.css',
+            [],
+            '1.0'
+        );
+
+        wp_enqueue_script(
+            'curso-js',
+            get_template_directory_uri() . '/assets/js/curso.js',
             [],
             '1.0',
             true
