@@ -39,6 +39,12 @@ function capacitaciones_assets() {
             '1.0',
             true
         );
+
+        // 🔥 AJUSTE LOGIN (nonce dinámico)
+        wp_localize_script('mass-login-js', 'LM', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('lm_login_nonce')
+        ]);
     }
 
     // 🔥 CURSOS (AQUÍ ESTABA EL PROBLEMA)
@@ -61,4 +67,5 @@ function capacitaciones_assets() {
     }
 
 }
+
 add_action('wp_enqueue_scripts', 'capacitaciones_assets');
