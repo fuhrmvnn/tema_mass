@@ -65,7 +65,7 @@ function mass_redirect_por_rol( $user ): string {
     // 🔥 Supervisor / Instructor / Admin → panel empresa
     if (
         in_array('administrator', $roles) ||
-        in_array('supervisor_empresa', $roles) ||
+        in_array('supervisor-empresa', $roles) ||
         in_array('tutor_instructor', $roles)
     ) {
         return home_url('/panel-empresa/');
