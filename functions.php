@@ -26,6 +26,23 @@ function mass_enqueue_styles() {
             array('mass-main'),
             '2.0'
         );
+    };
+     if (is_page_template('single-couses.php')) {
+        wp_enqueue_style(
+            'curso-css',
+            get_template_directory_uri() . '/assets/css/curso.css',
+            array('mass-main', 'mi-perfil-css'),
+            '2.0'
+        );
     }
+
 }
 add_action('wp_enqueue_scripts', 'mass_enqueue_styles');
+
+//dejar al final del archivo 
+add_filter('template_include', function($template) {
+    if (is_singular('courses')) {
+        return get_template_directory() . '/single-courses.php';
+    }
+    return $template;
+});
