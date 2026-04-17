@@ -8,6 +8,12 @@ function panel_empresa_assets() {
         array(),
         '2.0'
     );
+     wp_enqueue_style(
+        'mi-perfil-css',
+        get_template_directory_uri() . '/assets/css/mi-perfil.css',
+        array(),
+        '2.0'
+    );
 
     wp_enqueue_script(
         'panel-empresa-js',
