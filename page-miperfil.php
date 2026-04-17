@@ -9,7 +9,6 @@ $args = array(
 );
 
 $courses = new WP_Query($args);
-
 if ($courses->have_posts()) :
     while ($courses->have_posts()) : $courses->the_post();
         ?>
@@ -20,6 +19,8 @@ if ($courses->have_posts()) :
         <?php
     endwhile;
     wp_reset_postdata();
+else :
+    echo '<p>No hay cursos disponibles.</p>';
 endif;
 
-php get_footer(); ?>
+get_footer(); ?>
