@@ -38,6 +38,7 @@ while (have_posts()) : the_post();
 
             <div class="card-info">
                 <h3>Información del curso</h3>
+                <?php do_action('tutor_course/single/lessons');?>
 
             </div>
 
