@@ -19,11 +19,13 @@ function lmLogin() {
     btnTxt.style.display = 'none';
     loader.style.display = 'inline';
  
-    var data = new FormData();
-    data.append('action', 'lm_do_login');
-    data.append('log',    usuario);
-    data.append('pwd',    pass);
-    data.append('nonce',  LM.nonce);
+var data = 'action=lm_do_login&log=' + encodeURIComponent(usuario) + '&pwd=' + encodeURIComponent(pass) + '&nonce=' + encodeURIComponent(LM.nonce);
+
+fetch(LM.ajaxUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: data
+})
  
     fetch(LM.ajaxUrl, { method: 'POST', body: data })
         .then(function(r) { return r.json(); })
