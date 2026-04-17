@@ -13,7 +13,7 @@ function lm_do_login() {
         $user = wp_get_current_user();
 
         wp_send_json_success([
-            'redirect' => mass_redirect_por_rol( $user->roles )
+            'redirect' => mass_redirect_por_rol( $user )
         ]);
     }
 
@@ -51,35 +51,28 @@ function lm_do_login() {
 
     // ✅ Login correcto
     wp_send_json_success([
-        'redirect' => mass_redirect_por_rol( $user->roles )
+        'redirect' => mass_redirect_por_rol( $user )
     ]);
 
     wp_die();
 }
 
-/* ── Helper: redirección por rol ── */
-function mass_redirect_por_rol( array $roles ): string {
+/* ── Helper: redirección por capacidades ── */
+function mass_redirect_por_rol( $user ): string {
 
-    // 🔥 Subscriber → perfil
-    if ( in_array('subscriber', $roles) ) {
+    // 🔥 Alumno (subscriber)
+    if ( in_array('subscriber', $user->roles) ) {
         return home_url('/mi-perfil/');
     }
 
-    // 🔥 Supervisor empresa → panel
-    if ( in_array('supervisor_empresa', $roles) ) {
+    // 🔥 Usuarios con permisos de gestión → panel empresa
+    if (
+        user_can($user, 'edit_posts') || 
+        user_can($user, 'manage_options')
+    ) {
         return home_url('/panel-empresa/');
     }
 
-    // 🔥 Instructor → panel (ajusta slug real si es distinto)
-    if ( in_array('instructor', $roles) || in_array('tutor_instructor', $roles) ) {
-        return home_url('/panel-empresa/');
-    }
-
-    // 🔥 Admin → panel
-    if ( in_array('administrator', $roles) ) {
-        return home_url('/panel-empresa/');
-    }
-
+    // 🔚 fallback
     return home_url('/');
 }
-error_log(print_r($roles, true));
