@@ -39,9 +39,6 @@ while (have_posts()) : the_post();
             <div class="card-info">
                 <h3>Información del curso</h3>
 
-                <p><strong>Duración:</strong><br>
-                    <?php echo tutor_utils()->get_course_duration($course_id); ?>
-                </p>
             </div>
 
         </aside>
