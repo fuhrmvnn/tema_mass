@@ -82,3 +82,4 @@ function mass_redirect_por_rol( array $roles ): string {
 
     return home_url('/');
 }
+error_log(print_r($roles, true));
