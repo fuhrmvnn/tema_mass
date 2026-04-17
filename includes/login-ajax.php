@@ -5,7 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ── AJAX: procesar login ── */
 add_action( 'wp_ajax_nopriv_lm_do_login', function() {
  
-    check_ajax_referer( 'lm_login_nonce', 'nonce' );
+if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'lm_login_nonce' ) ) {
+    wp_send_json_error( [ 'message' => 'Nonce inválido: ' . ($_POST['nonce'] ?? 'vacío') ] );
+}
  
     $log = sanitize_text_field( $_POST['log'] ?? '' );
     $pwd = $_POST['pwd'] ?? '';
