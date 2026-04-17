@@ -1,5 +1,6 @@
 * {
   font-family: 'Inter', sans-serif;
+  outline: 1px solid red;
 }
 /***** HEADER *****/
 .site-header {
