@@ -25,4 +25,18 @@ function capacitaciones_assets() {
 }
 add_action('wp_enqueue_scripts', 'capacitaciones_assets');
 
-
+if ( is_page_template( 'page-login.php' ) ) {
+    wp_enqueue_style(
+        'mass-login',
+        get_template_directory_uri() . '/assets/css/login.css',
+        [ 'mass-main' ],
+        '1.0'
+    );
+    wp_enqueue_script(
+        'mass-login-js',
+        get_template_directory_uri() . '/assets/js/login.js',
+        [],
+        '1.0',
+        true // footer
+    );
+}

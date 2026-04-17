@@ -2,6 +2,7 @@
 
 require_once get_template_directory() . '/includes/enqueue.php';
 require_once get_template_directory() . '/includes/panel-empresa-ajax.php';
+require_once get_template_directory() . '/includes/login-ajax.php';
 
 function mass_enqueue_styles() {
 
