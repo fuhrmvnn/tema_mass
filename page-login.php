@@ -29,21 +29,23 @@ get_header();
             <h2 class="lm-titulo">Bienvenido</h2>
 
             <div class="lm-field">
-                <label for="lm_usuario">Usuario</label>
-                <input type="text" id="lm_usuario">
+                <label class="lm-label" for="lm_usuario">Usuario</label>
+                <input type="text" id="lm_usuario" class="lm-input">
             </div>
 
             <div class="lm-field">
-                <label for="lm_pass">Contraseña</label>
-                <input type="password" id="lm_pass">
+                <label class="lm-label" for="lm_pass">Contraseña</label>
+                <input type="password" id="lm_pass" class="lm-input">
             </div>
 
-            <div id="lm-error" style="display:none;"></div>
+            <div id="lm-error" class="lm-error" style="display:none;"></div>
 
-            <button id="lm-btn" onclick="lmLogin()">
-                <span id="lm-btn-text">Ingresar</span>
-                <span id="lm-btn-loader" style="display:none;">Cargando...</span>
-            </button>
+            <div class="lm-btn-wrap">
+                <button class="lm-btn" id="lm-btn" onclick="lmLogin()">
+                    <span id="lm-btn-text">Ingresar</span>
+                    <span id="lm-btn-loader" style="display:none;">Cargando...</span>
+                </button>
+            </div>
 
         </div>
     </div>
