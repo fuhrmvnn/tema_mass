@@ -42,11 +42,6 @@ while (have_posts()) : the_post();
                 <p><strong>Duración:</strong><br>
                     <?php echo tutor_utils()->get_course_duration($course_id); ?>
                 </p>
-
-                <p><strong>Estudiantes:</strong><br>
-                    <?php echo tutor_utils()->count_enrolled_users_by_course($course_id); ?>
-                </p>
-
             </div>
 
         </aside>
