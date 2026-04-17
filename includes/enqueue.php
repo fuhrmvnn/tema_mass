@@ -1,6 +1,6 @@
 <?php
 
-function panel_empresa_assets() {
+function capacitaciones_assets() {
 
     wp_enqueue_style(
         'panel-empresa-css',
@@ -11,7 +11,7 @@ function panel_empresa_assets() {
      wp_enqueue_style(
         'mi-perfil-css',
         get_template_directory_uri() . '/assets/css/mi-perfil.css',
-        array(),
+        array('panel-empresa'),
         '2.0'
     );
 
@@ -29,5 +29,6 @@ function panel_empresa_assets() {
         'nonce' => wp_create_nonce('pe_nonce')
     ]);
 }
-add_action('wp_enqueue_scripts', 'panel_empresa_assets');
+add_action('wp_enqueue_scripts', 'capacitaciones_assets');
+
 
