@@ -1,57 +1,49 @@
 /***** HEADER *****/
 .site-header {
-  background-color: #eef2fb;
-  border-bottom: 1px solid #d0d8ef;
-  padding: 10px 24px;
+    background-color: #eef2fb;
+    border-bottom: 1px solid #d0d8ef;
+    padding: 10px 24px;
 }
 .header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.logo-icon {
-  background-color: #1a3a8f;
-  color: white;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 16px;
+.logo {
+    width: 42px;
+    height: auto;
 }
 .brand-name {
-  font-weight: 600;
-  font-size: 15px;
-  color: #1a1a2e;
+    font-weight: 600;
+    font-size: 15px;
+    color: #1a1a2e;
 }
 .header-nav {
-  display: flex;
-  gap: 32px;
+    display: flex;
+    gap: 32px;
 }
 .header-nav a {
-  text-decoration: none;
-  color: #1a1a2e;
-  font-size: 15px;
+    text-decoration: none;
+    color: #1a1a2e;
+    font-size: 15px;
 }
 .header-nav a:hover {
-  color: #1a3a8f;
+    color: #1a3a8f;
 }
 
 /***** FOOTER *****/
 .site-footer {
-  background-color: #1a3a8f;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  margin-top: auto;
+    background-color: #1a3a8f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: auto;
 }
