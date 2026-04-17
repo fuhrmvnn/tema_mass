@@ -40,10 +40,4 @@ function mass_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'mass_enqueue_styles');
 
-//dejar al final del archivo 
-add_filter('template_include', function($template) {
-    if (get_post_type() === 'courses') {
-        return get_template_directory() . '/single-courses.php';
-    }
-    return $template;
-}, 99);
+

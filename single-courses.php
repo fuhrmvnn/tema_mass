@@ -22,8 +22,6 @@ while (have_posts()) : the_post();
         <div class="curso-main">
 
             <?php do_action('tutor_course/single/before/main_content'); ?>
-
-                <h2>Descripción</h2>
                 <?php echo apply_filters('the_content', get_the_content()); ?>
 
         </div>
