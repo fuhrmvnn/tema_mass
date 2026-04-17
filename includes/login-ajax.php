@@ -60,30 +60,25 @@ function lm_do_login() {
 /* ── Helper: redirección por rol ── */
 function mass_redirect_por_rol( array $roles ): string {
 
-    // 🔥 SOLO subscriber (sin otros roles)
-    if (
-        in_array('subscriber', $roles) &&
-        !in_array('supervisor_empresa', $roles) &&
-        !in_array('tutor_instructor', $roles) &&
-        !in_array('administrator', $roles)
-    ) {
+    // 🔥 Subscriber → perfil
+    if ( in_array('subscriber', $roles) ) {
         return home_url('/mi-perfil/');
     }
 
-    // 🔥 Roles empresa
-    if (
-        in_array('supervisor_empresa', $roles) ||
-        in_array('tutor_instructor',   $roles)
-    ) {
+    // 🔥 Supervisor empresa → panel
+    if ( in_array('supervisor_empresa', $roles) ) {
         return home_url('/panel-empresa/');
     }
 
-    // 🔥 Administrador
+    // 🔥 Instructor → panel (ajusta slug real si es distinto)
+    if ( in_array('instructor', $roles) || in_array('tutor_instructor', $roles) ) {
+        return home_url('/panel-empresa/');
+    }
+
+    // 🔥 Admin → panel
     if ( in_array('administrator', $roles) ) {
         return home_url('/panel-empresa/');
     }
 
-    // 🔚 Fallback
     return home_url('/');
 }
-error_log(print_r($roles, true));
