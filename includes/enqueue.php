@@ -8,13 +8,7 @@ function capacitaciones_assets() {
         array(),
         '2.0'
     );
-     wp_enqueue_style(
-        'mi-perfil-css',
-        get_template_directory_uri() . '/assets/css/mi-perfil.css',
-        array('panel-empresa'),
-        '2.0'
-    );
-
+   
     wp_enqueue_script(
         'panel-empresa-js',
         get_template_directory_uri() . '/assets/js/panel-empresa.js',
