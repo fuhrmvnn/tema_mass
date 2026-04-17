@@ -19,28 +19,29 @@ function lmLogin() {
     btnTxt.style.display = 'none';
     loader.style.display = 'inline';
  
-var data = 'action=lm_do_login&log=' + encodeURIComponent(usuario) + '&pwd=' + encodeURIComponent(pass) + '&nonce=' + encodeURIComponent(LM.nonce);
-
-fetch(LM.ajaxUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: data
-})
+    var data = 'action=lm_do_login'
+             + '&log='   + encodeURIComponent(usuario)
+             + '&pwd='   + encodeURIComponent(pass)
+             + '&nonce=' + encodeURIComponent(LM.nonce);
  
-    fetch(LM.ajaxUrl, { method: 'POST', body: data })
-        .then(function(r) { return r.json(); })
-        .then(function(res) {
-            if (res.success) {
-                window.location.href = res.data.redirect;
-            } else {
-                lmError(res.data.message || 'Usuario o contraseña incorrectos.');
-                lmReset();
-            }
-        })
-        .catch(function() {
-            lmError('Error de conexión. Intenta nuevamente.');
+    fetch(LM.ajaxUrl, {
+        method  : 'POST',
+        headers : { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body    : data
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+        if (res.success) {
+            window.location.href = res.data.redirect;
+        } else {
+            lmError(res.data.message || 'Usuario o contraseña incorrectos.');
             lmReset();
-        });
+        }
+    })
+    .catch(function() {
+        lmError('Error de conexión. Intenta nuevamente.');
+        lmReset();
+    });
 }
  
 function lmError(msg) {
@@ -61,7 +62,8 @@ function lmReset() {
 // Enter para enviar
 document.addEventListener('DOMContentLoaded', function() {
     ['lm_usuario', 'lm_pass'].forEach(function(id) {
-        document.getElementById(id).addEventListener('keydown', function(e) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') lmLogin();
         });
     });
