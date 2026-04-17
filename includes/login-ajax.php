@@ -57,20 +57,23 @@ function lm_do_login() {
     wp_die();
 }
 
-/* ── Helper: redirección por capacidades ── */
+/* ── Helper: redirección por rol (simple y confiable) ── */
 function mass_redirect_por_rol( $user ): string {
 
-    // 🔥 Alumno (subscriber)
-    if ( in_array('subscriber', $user->roles) ) {
-        return home_url('/mi-perfil/');
-    }
+    $roles = (array) $user->roles;
 
-    // 🔥 Usuarios con permisos de gestión → panel empresa
+    // 🔥 Supervisor / Instructor / Admin → panel empresa
     if (
-        user_can($user, 'edit_posts') || 
-        user_can($user, 'manage_options')
+        in_array('administrator', $roles) ||
+        in_array('supervisor_empresa', $roles) ||
+        in_array('tutor_instructor', $roles)
     ) {
         return home_url('/panel-empresa/');
+    }
+
+    // 🔥 Alumno → perfil
+    if ( in_array('subscriber', $roles) ) {
+        return home_url('/mi-perfil/');
     }
 
     // 🔚 fallback

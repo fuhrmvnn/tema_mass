@@ -38,6 +38,40 @@ function mass_enqueue_styles() {
     }
 
 }
-add_action('wp_enqueue_scripts', 'mass_enqueue_styles');
 
+add_action('template_redirect', function() {
+
+    if ( ! is_user_logged_in() ) return;
+
+    // No afectar admin ni AJAX
+    if ( is_admin() || wp_doing_ajax() ) return;
+
+    $user  = wp_get_current_user();
+    $roles = (array) $user->roles;
+
+    // Admin puede navegar libre
+    if ( in_array('administrator', $roles) ) return;
+
+    // Supervisor / instructor → panel empresa
+    if (
+        in_array('supervisor_empresa', $roles) ||
+        in_array('tutor_instructor', $roles)
+    ) {
+        if ( ! is_page('panel-empresa') ) {
+            wp_redirect( home_url('/panel-empresa/') );
+            exit;
+        }
+    }
+
+    // Alumno → perfil
+    if ( in_array('subscriber', $roles) ) {
+        if ( ! is_page('mi-perfil') ) {
+            wp_redirect( home_url('/mi-perfil/') );
+            exit;
+        }
+    }
+
+});
+
+add_action('wp_enqueue_scripts', 'mass_enqueue_styles');
 
