@@ -45,7 +45,7 @@ function lm_do_login() {
         'redirect' => mass_redirect_por_rol( $user->roles )
     ]);
 
-    wp_die(); // cerrar correctamente AJAX
+    wp_die();
 }
 
 /* ── Redirección login nativo WP ── */
@@ -59,17 +59,20 @@ add_filter( 'login_redirect', function( $redirect_to, $request, $user ) {
 /* ── Helper: redirección por rol ── */
 function mass_redirect_por_rol( array $roles ): string {
 
+    // Roles empresa
     if (
         in_array( 'administrator',      $roles ) ||
         in_array( 'supervisor_empresa', $roles ) ||
         in_array( 'tutor_instructor',   $roles )
     ) {
-        return home_url( '/panel-empresa/' );
+        return site_url( '/mass/panel-empresa/' );
     }
 
+    // Suscriptor
     if ( in_array( 'subscriber', $roles ) ) {
-        return home_url( '/mi-perfil/' );
+        return site_url( '/mass/mi-perfil/' );
     }
 
-    return home_url( '/' );
+    // Fallback
+    return site_url( '/mass/' );
 }
