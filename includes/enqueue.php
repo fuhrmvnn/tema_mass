@@ -14,7 +14,7 @@ function capacitaciones_assets() {
         'panel-empresa-js',
         get_template_directory_uri() . '/assets/js/panel-empresa.js',
         [],
-        '1.0',
+        '1.1',
         true
     );
 
