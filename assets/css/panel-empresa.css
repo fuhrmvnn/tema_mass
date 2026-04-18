@@ -414,7 +414,6 @@
         outline: none;
         transition: border 0.15s;
         background: #fff;
-        width: 100%;
     }
 
     .pe-input:focus,
