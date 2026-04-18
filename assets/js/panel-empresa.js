@@ -157,3 +157,6 @@ var peUsuarioActual = null;
                 }
             });
     }
+
+console.log(typeof pe_ajax !== 'undefined' ? pe_ajax : 'NO DEFINIDO')
+console.log(typeof peGuardar)
