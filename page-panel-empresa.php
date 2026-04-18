@@ -193,15 +193,75 @@ foreach ($usuarios as $t) {
 </div>
 
 <!-- MODAL -->
-<div id="peModal" style="display:none;">
-    <input type="text" id="pe_nombre" placeholder="Nombre">
-    <input type="email" id="pe_email" placeholder="Email">
-    <input type="text" id="pe_login" placeholder="Usuario">
-    <input type="password" id="pe_password" placeholder="Password">
+<div id="peModal" style="display:none;" class="pe-modal-overlay">
+        <div class="pe-modal-box">
 
-    <button onclick="peGuardar()">Guardar</button>
-    <button onclick="peModalClose()">Cerrar</button>
-</div>
+            <div class="pe-modal-header">
+                <h3 id="peModalTitulo" class="pe-modal-titulo"></h3>
+                <button class="pe-modal-cerrar" onclick="peModalClose()">&#x2715;</button>
+            </div>
+
+            <div class="pe-modal-body">
+                <div class="pe-form-grid">
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">Nombre completo</label>
+                        <input type="text" id="pe_nombre" class="pe-input" placeholder="Ej: Juan Pérez">
+                    </div>
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">RUT</label>
+                        <input type="text" id="pe_rut" class="pe-input" placeholder="Ej: 12.345.678-9">
+                    </div>
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">Correo electrónico</label>
+                        <input type="email" id="pe_email" class="pe-input" placeholder="correo@ejemplo.com">
+                    </div>
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">Nombre de usuario</label>
+                        <input type="text" id="pe_login" class="pe-input" placeholder="usuario123">
+                    </div>
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">Contraseña <span id="pe_pass_hint" style="font-size:12px;color:#7A8EAE;">(dejar vacío para no cambiar)</span></label>
+                        <input type="password" id="pe_password" class="pe-input" placeholder="••••••••">
+                    </div>
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">Cargo</label>
+                        <select id="pe_cargo" class="pe-select">
+                            <option value="">— Seleccionar —</option>
+                            <option value="Bombero">Bombero</option>
+                            <option value="Bombero de bencina">Bombero de bencina</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Operador">Operador</option>
+                            <option value="Técnico">Técnico</option>
+                            <option value="Administrativo">Administrativo</option>
+                        </select>
+                    </div>
+
+                    <div class="pe-form-group">
+                        <label class="pe-label">Estado</label>
+                        <select id="pe_estado" class="pe-select">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Fuera de servicio</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id="pe_msg" class="pe-msg" style="display:none;"></div>
+            </div>
+
+            <div class="pe-modal-footer">
+                <button class="pe-btn-cancelar" onclick="peModalClose()">Cancelar</button>
+                <button class="pe-btn-guardar" id="peBtnGuardar" onclick="peGuardar()">Guardar</button>
+            </div>
+
+        </div>
+    </div>
 
 </main>
 
