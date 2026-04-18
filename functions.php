@@ -4,6 +4,9 @@ require_once get_template_directory() . '/includes/enqueue.php';
 require_once get_template_directory() . '/includes/panel-empresa-ajax.php';
 require_once get_template_directory() . '/includes/login-ajax.php';
 
+/* ─────────────────────────────
+    ESTILOS
+───────────────────────────── */
 function mass_enqueue_styles() {
 
     wp_enqueue_style(
@@ -28,7 +31,8 @@ function mass_enqueue_styles() {
             '2.0'
         );
     };
-     if (is_page_template('single-couses.php')) {
+
+    if (is_page_template('single-couses.php')) {
         wp_enqueue_style(
             'curso-css',
             get_template_directory_uri() . '/assets/css/curso.css',
@@ -38,7 +42,56 @@ function mass_enqueue_styles() {
     }
 
 }
+add_action('wp_enqueue_scripts', 'mass_enqueue_styles');
 
+
+/* ─────────────────────────────
+    OCULTAR ADMIN BAR
+───────────────────────────── */
+add_filter('show_admin_bar', function($show) {
+    if ( current_user_can('administrator') ) {
+        return true;
+    }
+    return false;
+});
+
+
+/* ─────────────────────────────
+    BLOQUEAR WP-ADMIN
+───────────────────────────── */
+add_action('admin_init', function() {
+
+    // Permitir AJAX
+    if ( wp_doing_ajax() ) return;
+
+    // Solo admins pueden entrar
+    if ( ! current_user_can('administrator') ) {
+
+        $user  = wp_get_current_user();
+        $roles = (array) $user->roles;
+
+        if ( in_array('subscriber', $roles) ) {
+            wp_redirect( home_url('/mi-perfil/') );
+            exit;
+        }
+
+        if (
+            in_array('supervisor_empresa', $roles) ||
+            in_array('tutor_instructor', $roles)
+        ) {
+            wp_redirect( home_url('/panel-empresa/') );
+            exit;
+        }
+
+        wp_redirect( home_url('/') );
+        exit;
+    }
+});
+
+
+/* ─────────────────────────────
+    REDIRECCIÓN GLOBAL FRONTEND
+───────────────────────────── */
 add_action('template_redirect', function() {
 
     if ( ! is_user_logged_in() ) return;
@@ -72,6 +125,3 @@ add_action('template_redirect', function() {
     }
 
 });
-
-add_action('wp_enqueue_scripts', 'mass_enqueue_styles');
-
