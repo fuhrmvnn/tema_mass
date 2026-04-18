@@ -3,13 +3,17 @@
  * Template Name: Login
  */
 
+// 🔥 Redirección si ya está logueado
 if ( is_user_logged_in() ) {
     $user  = wp_get_current_user();
     $roles = $user->roles;
 
     if ( in_array( 'administrator', $roles ) ) {
         // puede quedarse
-    } elseif ( in_array( 'supervisor_empresa', $roles ) || in_array( 'tutor_instructor', $roles ) ) {
+    } elseif (
+        in_array( 'supervisor_empresa', $roles ) ||
+        in_array( 'tutor_instructor', $roles )
+    ) {
         wp_redirect( home_url( '/panel-empresa/' ) );
         exit;
     } elseif ( in_array( 'subscriber', $roles ) ) {
@@ -18,10 +22,37 @@ if ( is_user_logged_in() ) {
     }
 }
 
+/* ── 🔥 Obtener imagen desde WordPress (inicio.jpg) ── */
+$img_url = '';
+
+$attachments = get_posts([
+    'post_type'      => 'attachment',
+    'posts_per_page' => 1,
+    'meta_query'     => [
+        [
+            'key'     => '_wp_attached_file',
+            'value'   => 'inicio.jpg',
+            'compare' => 'LIKE'
+        ]
+    ]
+]);
+
+if ( ! empty($attachments) ) {
+    $img_url = wp_get_attachment_url($attachments[0]->ID);
+}
+
+// 🔥 fallback si no existe
+if ( empty($img_url) ) {
+    $img_url = get_template_directory_uri() . '/assets/img/inicio.jpg';
+}
+
 get_header();
 ?>
 
 <div class="lm-wrap">
+
+    <!-- 🔥 Hero con imagen dinámica -->
+    <div class="lm-hero" style="background-image: url('<?php echo esc_url($img_url); ?>');"></div>
 
     <div class="lm-card-wrap">
         <div class="lm-card">
