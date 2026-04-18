@@ -26,7 +26,7 @@ function peAZ(btn) {
 }
 
 
-    var peUsuarioActual = null;
+var peUsuarioActual = null;
 
     function peModalOpen() {
         var modal = document.getElementById('peModal');
@@ -157,4 +157,3 @@ function peAZ(btn) {
                 }
             });
     }
-    return ob_get_clean();
