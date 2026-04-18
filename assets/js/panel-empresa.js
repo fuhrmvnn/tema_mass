@@ -75,6 +75,16 @@ var peUsuarioActual = null;
     }
 
     function peGuardar() {
+         var nombre   = document.getElementById('pe_nombre').value.trim();
+    var email    = document.getElementById('pe_email').value.trim();
+    var login    = document.getElementById('pe_login').value.trim();
+    var password = document.getElementById('pe_password').value;
+
+    console.log('nombre:', nombre);
+    console.log('email:', email);
+    console.log('login:', login);
+    console.log('password:', password);
+    console.log('peUsuarioActual:', peUsuarioActual);
         var nombre   = document.getElementById('pe_nombre').value.trim();
         var rut      = document.getElementById('pe_rut').value.trim();
         var email    = document.getElementById('pe_email').value.trim();
