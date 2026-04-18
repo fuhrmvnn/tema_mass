@@ -1,19 +1,30 @@
-function peF(estado, btn) {
-        document.querySelectorAll('#peTabla tbody tr').forEach(function(f) {
-            f.style.display = (estado === 'todos' || f.dataset.estado === estado) ? '' : 'none';
-        });
-        document.querySelectorAll('.pe-filtro-btn').forEach(function(b) { b.classList.remove('activo'); });
-        btn.classList.add('activo');
-    }
+// Cerrar modal al click fuera — se registra UNA sola vez
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('peModal').addEventListener('click', function(e) {
+        if (e.target === this) peModalClose();
+    });
+});
 
-    function peAZ() {
-        var tbody = document.querySelector('#peTabla tbody');
-        Array.from(tbody.rows)
-            .sort(function(a, b) {
-                return (a.dataset.nombre || '').localeCompare(b.dataset.nombre || '');
-            })
-            .forEach(function(r) { tbody.appendChild(r); });
-    }
+function peF(estado, btn) {
+    document.querySelectorAll('#peTabla tbody tr').forEach(function(f) {
+        f.style.display = (estado === 'todos' || f.dataset.estado === estado) ? '' : 'none';
+    });
+    document.querySelectorAll('.pe-filtro-btn').forEach(function(b) { b.classList.remove('activo'); });
+    btn.classList.add('activo');
+}
+
+function peAZ(btn) {
+    var tbody = document.querySelector('#peTabla tbody');
+    Array.from(tbody.rows)
+        .sort(function(a, b) {
+            return (a.dataset.nombre || '').localeCompare(b.dataset.nombre || '');
+        })
+        .forEach(function(r) { tbody.appendChild(r); });
+
+    document.querySelectorAll('.pe-filtro-btn').forEach(function(b) { b.classList.remove('activo'); });
+    btn.classList.add('activo');
+}
+
 
     var peUsuarioActual = null;
 
@@ -22,10 +33,6 @@ function peF(estado, btn) {
         modal.style.display = 'flex';
         document.getElementById('pe_msg').style.display = 'none';
         document.getElementById('pe_msg').className = 'pe-msg';
-        // cerrar al hacer click fuera
-        modal.onclick = function(e) {
-            if (e.target === modal) peModalClose();
-        };
     }
 
     function peModalClose() {
