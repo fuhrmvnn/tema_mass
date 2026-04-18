@@ -1,309 +1,323 @@
-/* =====================
-   RESET / BASE
-===================== */
-.pe-wrap * {
-    box-sizing: border-box;
-}
+ /* =====================
+       RESET / BASE
+    ===================== */
+    .pe-wrap * { box-sizing: border-box; }
 
-/* =====================
-   HEADER
-===================== */
-.pe-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 30px 28px 30px;
-    border-bottom: 1px solid #E5E5E5;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    gap: 20px;
-}
+    /* =====================
+       HEADER: perfil + métricas
+    ===================== */
+    .pe-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 30px 28px 30px;
+        border-bottom: 1px solid #E5E5E5;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
 
-/* Perfil */
-.pe-perfil {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-}
+    /* Perfil */
+    .pe-perfil {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+    }
 
-.pe-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: #E8EEF9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    font-weight: 600;
-    color: #7A8EAE;
-    letter-spacing: 2px;
-    flex-shrink: 0;
-}
+    .pe-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #E8EEF9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 600;
+        color: #7A8EAE;
+        letter-spacing: 2px;
+        flex-shrink: 0;
+    }
 
-.pe-perfil-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
+    .pe-perfil-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
 
-.pe-rol {
-    font-size: 13px;
-    color: #7A8EAE;
-}
+    .pe-rol {
+        font-size: 13px;
+        color: #7A8EAE;
+        font-weight: 400;
+    }
 
-.pe-nombre {
-    font-size: 26px;
-    font-weight: 700;
-    color: #00246F;
-    margin: 2px 0 4px;
-}
+    .pe-nombre {
+        font-size: 26px;
+        font-weight: 700;
+        color: #00246F;
+        line-height: 1.2;
+        margin: 2px 0 4px 0;
+    }
 
-.pe-empresa,
-.pe-sede {
-    font-size: 15px;
-    color: #00246F;
-    margin: 0;
-}
+    .pe-empresa,
+    .pe-sede {
+        font-size: 15px;
+        color: #00246F;
+        font-weight: 400;
+        margin: 0;
+        line-height: 1.5;
+    }
 
-/* =====================
-   MÉTRICAS
-===================== */
-.pe-metricas {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-}
+    /* Métricas */
+    .pe-metricas {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
-.pe-metrica-card {
-    background: #fff;
-    border: 1.5px solid #00246F;
-    border-radius: 10px;
-    padding: 14px 28px;
-    text-align: center;
-    min-width: 90px;
-    transition: transform 0.2s ease;
-}
+    .pe-metrica-card {
+        background: #fff;
+        border: 1.5px solid #00246F;
+        border-radius: 10px;
+        padding: 14px 28px;
+        text-align: center;
+        min-width: 90px;
+        transition: transform 0.2s ease;
+    }
 
-.pe-metrica-card:hover {
-    transform: translateY(-2px);
-}
+    .pe-metrica-card:hover { transform: translateY(-2px); }
 
-.pe-metrica-num {
-    font-size: 32px;
-    font-weight: 700;
-    color: #00246F;
-}
+    .pe-metrica-num {
+        display: block;
+        font-size: 32px;
+        font-weight: 700;
+        color: #00246F;
+        line-height: 1.1;
+    }
 
-.pe-metrica-label {
-    font-size: 14px;
-    color: #00246F;
-}
+    .pe-metrica-label {
+        display: block;
+        font-size: 14px;
+        color: #00246F;
+        font-weight: 400;
+        margin-top: 4px;
+    }
 
-/* =====================
-   LISTADO
-===================== */
-.pe-lista {
-    padding: 0 30px;
-}
+    /* =====================
+       LISTADO
+    ===================== */
+    .pe-lista {
+        padding: 0 30px;
+    }
 
-.pe-titulo {
-    font-size: 20px;
-    font-weight: 700;
-    color: #00246F;
-    margin-bottom: 22px;
-}
+    .pe-titulo {
+        font-size: 20px;
+        font-weight: 700;
+        color: #00246F;
+        margin-bottom: 22px;
+    }
 
-.pe-top {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 12px;
-}
+    .pe-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
 
-/* Botones filtros */
-.pe-filtros {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
+    .pe-filtros {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
 
-.pe-filtro-btn {
-    padding: 10px 22px;
-    border-radius: 8px;
-    border: 1.5px solid #386AF1;
-    background: #fff;
-    color: #386AF1;
-    cursor: pointer;
-    font-size: 15px;
-    transition: 0.2s;
-}
+    .pe-filtro-btn {
+        padding: 10px 22px;
+        border-radius: 8px;
+        border: 1.5px solid #386AF1;
+        background: #fff;
+        color: #386AF1;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: background 0.15s, color 0.15s;
+        line-height: 1;
+    }
 
-.pe-filtro-btn.activo,
-.pe-filtro-btn:hover {
-    background: #386AF1;
-    color: #fff;
-}
+    .pe-filtro-btn.activo,
+    .pe-filtro-btn:hover {
+        background: #386AF1;
+        color: #fff;
+    }
 
-/* Botón agregar */
-.pe-btn-agregar {
-    padding: 13px 30px;
-    border: 1.5px solid #386AF1;
-    background: #fff;
-    border-radius: 10px;
-    color: #00246F;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-}
+    .pe-btn-agregar {
+        padding: 13px 30px;
+        border: 1.5px solid #386AF1;
+        background: #fff;
+        border-radius: 10px;
+        color: #00246F;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+    }
 
-.pe-btn-agregar:hover {
-    background: #386AF1;
-    color: #fff;
-}
+    .pe-btn-agregar:hover {
+        background: #386AF1;
+        color: #fff;
+    }
 
-/* =====================
-   TABLA
-===================== */
-.pe-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    /* Tabla */
+    .pe-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: none;
+    }
 
-.pe-table thead tr {
-    border-top: 1.5px solid #D6E4FF;
-    border-bottom: 1.5px solid #D6E4FF;
-}
+    .pe-table thead tr {
+        border-top: 1.5px solid #D6E4FF;
+        border-bottom: 1.5px solid #D6E4FF;
+    }
 
-.pe-table th {
-    text-align: left;
-    padding: 13px 10px;
-    font-size: 16px;
-    color: #00246F;
-    font-weight: 600;
-}
+    .pe-table th {
+        text-align: left;
+        padding: 13px 10px;
+        font-size: 16px;
+        color: #00246F;
+        font-weight: 600;
+        white-space: nowrap;
+        border: none !important;
+    }
 
-.pe-table tbody tr {
-    border-bottom: 1px solid #F0F4FF;
-    transition: 0.1s;
-}
+    .pe-table tbody tr {
+        border-bottom: 1px solid #F0F4FF;
+        transition: background 0.1s;
+    }
 
-.pe-table tbody tr:hover {
-    background: #F7FAFF;
-}
+    .pe-table tbody tr:hover { background: #F7FAFF; }
 
-.pe-table td {
-    padding: 16px 10px;
-}
+    .pe-table td {
+        padding: 16px 10px;
+        vertical-align: middle;
+        border: none !important;
+    }
 
-/* Texto */
-.pe-nombre-trabajador {
-    font-size: 15px;
-    font-weight: 600;
-    color: #00246F;
-}
+    .pe-nombre-trabajador {
+        display: block;
+        font-size: 15px;
+        font-weight: 600;
+        color: #00246F;
+    }
 
-.pe-rut {
-    font-size: 13px;
-    color: #7A8EAE;
-}
+    .pe-rut {
+        display: block;
+        font-size: 13px;
+        font-weight: 400;
+        color: #7A8EAE;
+        margin-top: 2px;
+    }
 
-.pe-cargo {
-    font-size: 14px;
-    color: #4A5568;
-}
+    .pe-cargo {
+        font-size: 14px;
+        font-weight: 400;
+        color: #4A5568;
+    }
 
-/* =====================
-   BADGES
-===================== */
-.pe-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 16px;
-    border-radius: 30px;
-    font-size: 14px;
-}
+    /* Badges */
+    .pe-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 400;
+        white-space: nowrap;
+    }
 
-.pe-badge::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
+    .pe-badge::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
 
-.pe-badge-activo {
-    border: 1.5px solid #00D118;
-    color: #00D118;
-}
+    .pe-badge-activo  { border: 1.5px solid #00D118; color: #00D118; }
+    .pe-badge-activo::before  { background: #00D118; }
+    .pe-badge-inactivo { border: 1.5px solid #A8A8A8; color: #A8A8A8; }
+    .pe-badge-inactivo::before { background: #A8A8A8; }
 
-.pe-badge-activo::before {
-    background: #00D118;
-}
+    /* Progress */
+    .pe-progress-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
-.pe-badge-inactivo {
-    border: 1.5px solid #A8A8A8;
-    color: #A8A8A8;
-}
+    .pe-progress-bar {
+        background: #D9D9D9;
+        height: 12px;
+        width: 80px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
 
-.pe-badge-inactivo::before {
-    background: #A8A8A8;
-}
+    .pe-progress-fill {
+        height: 100%;
+        border-radius: 14px;
+        transition: width 0.4s ease;
+    }
 
-/* =====================
-   PROGRESS
-===================== */
-.pe-progress-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+    .pe-progress-pct {
+        font-size: 13px;
+        color: #4A5568;
+        font-weight: 500;
+        white-space: nowrap;
+    }
 
-.pe-progress-bar {
-    background: #D9D9D9;
-    height: 12px;
-    width: 80px;
-    border-radius: 14px;
-    overflow: hidden;
-}
+    /* Certificado */
+    .pe-cert-link {
+        color: #00246F;
+        font-size: 15px;
+        font-weight: 400;
+        text-decoration: underline;
+    }
 
-.pe-progress-fill {
-    height: 100%;
-    border-radius: 14px;
-    transition: width 0.4s ease;
-}
+    .pe-cert-link:hover { color: #386AF1; }
 
-.pe-progress-pct {
-    font-size: 13px;
-}
+    .pe-sin-cert {
+        color: #A8A8A8;
+        font-size: 15px;
+        font-weight: 400;
+    }
 
-/* =====================
-   CERTIFICADO
-===================== */
-.pe-cert-link {
-    color: #00246F;
-    text-decoration: underline;
-}
+    /* Acciones */
+    .pe-acciones a {
+        margin-right: 12px;
+        font-size: 15px;
+        font-weight: 400;
+        text-decoration: none;
+    }
 
-.pe-cert-link:hover {
-    color: #386AF1;
-}
+    .pe-modificar       { color: #C56900; }
+    .pe-modificar:hover { color: #C56900; text-decoration: underline; }
+    .pe-eliminar        { color: #FF0000; }
+    .pe-eliminar:hover  { color: #FF0000; text-decoration: underline; }
 
-.pe-sin-cert {
-    color: #A8A8A8;
-}
-
-/* =====================
-   ACCIONES
-===================== */
-.pe-acciones a {
-    margin-right: 12px;
-    text-decoration: none;
-}
-
-.pe-modificar { color: #C56900; }
-.pe-eliminar  { color: #FF0000; }
+    /* Responsive */
+    @media (max-width: 768px) {
+        .pe-header { padding: 10px 16px 24px 16px; }
+        .pe-lista  { padding: 0 16px; }
+        .pe-metricas { justify-content: center; }
+        .pe-top { flex-direction: column; align-items: flex-start; }
+        .pe-btn-agregar { width: 100%; }
+        .pe-table th, .pe-table td { font-size: 13px; padding: 10px 6px; }
+    }
 
 /* =====================
     MODAL
