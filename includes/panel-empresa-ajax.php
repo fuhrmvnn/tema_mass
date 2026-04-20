@@ -45,6 +45,13 @@ add_action('wp_ajax_pe_agregar_usuario', function() {
     update_user_meta($user_id, 'nombre_empresa', $empresa);
 
     wp_send_json_success(['mensaje' => 'Trabajador agregado correctamente.']);
+
+    $user_id = wp_create_user($login, $password, $email);
+    if (is_wp_error($user_id))
+        wp_send_json_error(['mensaje' => $user_id->get_error_message()]);
+
+    // Aprobar usuario en WP User Manager
+    update_user_meta($user_id, 'wpu_user_status', 'approved');
 });
 
 
