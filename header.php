@@ -14,7 +14,7 @@
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/mass-logo-1.png" alt="logo escudo azul de capacitaciones MASS" class="logo">
                 <span class="brand-name">capacitaciones MASS</span>
             </div>
-            <?php if (is_user_logged_in()):
+            <?php if (is_user_logged_in() && !is_front_page()):
                 $user  = wp_get_current_user();
                 $roles = (array) $user->roles;
                 $es_trabajador = in_array('subscriber', $roles);
