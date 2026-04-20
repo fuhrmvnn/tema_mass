@@ -194,7 +194,7 @@ foreach ($usuarios as $t) {
 
 <!-- MODAL -->
 <div id="peModal" style="display:none;" class="pe-modal-overlay">
-        <div class="pe-modal-box">
+        <div class="pe-modal-box" onclick="event.stopPropagation()">
 
             <div class="pe-modal-header">
                 <h3 id="peModalTitulo" class="pe-modal-titulo"></h3>
