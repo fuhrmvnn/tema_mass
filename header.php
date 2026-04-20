@@ -14,9 +14,18 @@
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/mass-logo-1.png" alt="logo escudo azul de capacitaciones MASS" class="logo">
                 <span class="brand-name">capacitaciones MASS</span>
             </div>
+            <?php if (is_user_logged_in()):
+                $user  = wp_get_current_user();
+                $roles = (array) $user->roles;
+                $es_trabajador = in_array('subscriber', $roles);
+                $es_empresa    = in_array('supervisor_empresa', $roles) || in_array('tutor_instructor', $roles) || in_array('administrator', $roles);
+            ?>
             <nav class="header-nav">
-                <a href="<?php echo get_permalink(get_page_by_path('cursos')); ?>">Cursos</a>
-                <a href="<?php echo get_permalink(get_page_by_path('miperfil')); ?>">Perfil</a>
+                <?php if ($es_trabajador): ?>
+                    <a href="<?php echo get_permalink(get_page_by_path('mi-perfil')); ?>">Mi perfil</a>
+                <?php endif; ?>
+                <a href="<?php echo wp_logout_url(home_url()); ?>">Cerrar sesión</a>
             </nav>
+        <?php endif; ?>
         </div>
     </header>
