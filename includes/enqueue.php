@@ -19,7 +19,7 @@ function capacitaciones_assets() {
     );
 
     wp_localize_script('panel-empresa-js', 'pe_ajax', [
-        'url'   => admin_url('panel-empresa-ajax.php'),
+        'url'   => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('pe_nonce')
     ]);
 

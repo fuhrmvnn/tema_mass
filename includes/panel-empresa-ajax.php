@@ -1,7 +1,7 @@
 <?php
 
 add_action('wp_ajax_pe_agregar_usuario', function() {
-    check_ajax_referer('pe_nonce', 'nonce');
+    //check_ajax_referer('pe_nonce', 'nonce');
 
     $user_id = wp_create_user($_POST['login'], $_POST['password'], $_POST['email']);
 
