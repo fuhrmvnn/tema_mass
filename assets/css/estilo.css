@@ -1,3 +1,9 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
 .card{
     border-radius: 10px;
     border: 1px solid #D9D9D9;
