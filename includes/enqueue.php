@@ -1,71 +1,53 @@
 <?php
+if (!defined('ABSPATH')) exit;
 
 function capacitaciones_assets() {
 
-    // ── Panel empresa (siempre carga) ──
-    wp_enqueue_style(
-        'panel-empresa-css',
-        get_template_directory_uri() . '/assets/css/panel-empresa.css',
-        [],
-        '2.0'
-    );
+    $css = get_stylesheet_directory_uri() . '/assets/css/';
+    $js  = get_stylesheet_directory_uri() . '/assets/js/';
+    $ver = wp_get_theme()->get('Version');
 
-    wp_enqueue_script(
-        'panel-empresa-js',
-        get_template_directory_uri() . '/assets/js/panel-empresa.js',
-        [],
-        '1.1',
-        true
-    );
+    /* ── Siempre: base + layout ── */
+    wp_enqueue_style('mass-base',   $css . 'base.css',   ['blocksy-child-style'], $ver);
+    wp_enqueue_style('mass-layout', $css . 'layout.css', ['mass-base'],           $ver);
 
-    wp_localize_script('panel-empresa-js', 'pe_ajax', [
-        'url'   => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('pe_nonce')
-    ]);
+    /* ── Panel empresa ── */
+    if (is_page('panel-empresa')) {
+        wp_enqueue_style('mass-panel', $css . 'panel-empresa.css', ['mass-layout'], $ver);
 
-    // ── Login ──
-    if ( is_page_template('page-login.php') ) {
-        wp_enqueue_style(
-            'mass-login',
-            get_template_directory_uri() . '/assets/css/login.css',
-            [],
-            '1.0'
-        );
-
-        wp_enqueue_script(
-            'mass-login-js',
-            get_template_directory_uri() . '/assets/js/login.js',
-            [],
-            '1.0',
-            true
-        );
-
-        // 🔥 AJUSTE LOGIN (nonce dinámico)
-        wp_localize_script('mass-login-js', 'LM', [
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce'   => wp_create_nonce('lm_login_nonce')
+        wp_enqueue_script('panel-empresa-js', $js . 'panel-empresa.js', [], $ver, true);
+        wp_localize_script('panel-empresa-js', 'pe_ajax', [
+            'url'   => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('pe_nonce'),
         ]);
     }
 
-    // 🔥 CURSOS (AQUÍ ESTABA EL PROBLEMA)
-    if ( is_singular('single-courses') ) {
+    /* ── Login ── */
+    if (is_page_template('page-login.php') || is_page('login')) {
+        wp_enqueue_style('mass-login', $css . 'login.css', ['mass-layout'], $ver);
 
-        wp_enqueue_style(
-            'curso-css',
-            get_template_directory_uri() . '/assets/css/curso.css',
-            [],
-            '1.0'
-        );
+        wp_enqueue_script('mass-login-js', $js . 'login.js', [], $ver, true);
+        wp_localize_script('mass-login-js', 'LM', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('lm_login_nonce'),
+        ]);
+    }
 
-        wp_enqueue_script(
-            'curso-js',
-            get_template_directory_uri() . '/assets/js/curso.js',
-            [],
-            '1.0',
-            true
-        );
+    /* ── Mi perfil ── */
+    $template_actual = get_page_template_slug();
+    if (is_page('mi-perfil') || $template_actual === 'page-miperfil.php') {
+        wp_enqueue_style('mass-perfil', $css . 'mi-perfil.css', ['mass-layout'], $ver);
+    }
+
+    /* ── Cursos (single) ── */
+    if (is_singular('mass_curso') || is_singular('mass_leccion')) {
+        wp_enqueue_style('mass-curso', $css . 'curso.css', ['mass-layout'], $ver);
+        wp_enqueue_script('curso-js',  $js  . 'curso.js', [], $ver, true);
+        wp_localize_script('curso-js', 'MASS', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('mass_cursos_nonce'),
+        ]);
     }
 
 }
-
-add_action('wp_enqueue_scripts', 'capacitaciones_assets');
+add_action('wp_enqueue_scripts', 'capacitaciones_assets', 25);

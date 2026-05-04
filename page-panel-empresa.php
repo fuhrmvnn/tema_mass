@@ -8,21 +8,20 @@ if (!is_user_logged_in()) {
     exit;
 }
 
+global $wpdb;
+
 $current_user = wp_get_current_user();
 $nombre       = $current_user->display_name;
-$rol_display  = in_array('administrator', $current_user->roles) ? 'Administrador' : 'Supervisor';
+$rol_display  = in_array('administrator', $current_user->roles) ? 'Administrador' : 'Gerente de Empresa';
 
-// Iniciales
 $partes    = explode(' ', trim($nombre));
 $iniciales = '';
 if (isset($partes[0])) $iniciales .= strtoupper(substr($partes[0], 0, 1));
 if (isset($partes[1])) $iniciales .= strtoupper(substr($partes[1], 0, 1));
 
-// ACF
 $empresa = get_field('nombre_empresa', 'user_' . $current_user->ID);
 $sede    = get_field('sede', 'user_' . $current_user->ID);
 
-// Usuarios
 $usuarios = get_users([
     'role'       => 'subscriber',
     'meta_key'   => 'nombre_empresa',
@@ -44,8 +43,8 @@ foreach ($usuarios as $t) {
 
 <div class="pe-wrap">
 
-<!-- HEADER -->
-<div class="pe-header">
+    <!-- HEADER -->
+    <div class="pe-header">
 
         <div class="pe-perfil">
             <div class="pe-avatar"><?php echo esc_html($iniciales); ?></div>
@@ -90,7 +89,7 @@ foreach ($usuarios as $t) {
                 <button class="pe-filtro-btn" onclick="peF('inactivo',this)">Fuera de servicio</button>
                 <button class="pe-filtro-btn" onclick="peAZ()">A - Z</button>
             </div>
-            <button class="pe-btn-agregar" onclick="peAgregar()">Agregar trabajador</button>
+            <button class="pe-btn-agregar" onclick="peAgregar()">Registro de colaborador</button>
         </div>
 
         <?php if (empty($usuarios)): ?>
@@ -117,19 +116,43 @@ foreach ($usuarios as $t) {
                 $cargo = get_field('rol', 'user_' . $user->ID);
                 $rut   = get_field('rut', 'user_' . $user->ID);
 
+                // Progreso desde tablas propias
                 $progress  = 0;
                 $cert_html = '<span class="pe-sin-cert">Sin certificado</span>';
 
-                if (function_exists('tutor_utils')) {
-                    $courses = tutor_utils()->get_enrolled_courses_by_user($user->ID);
-                    if (!empty($courses->posts)) {
-                        $course_id = $courses->posts[0]->ID;
-                        $progress  = (int) tutor_utils()->get_course_completed_percent($course_id, $user->ID);
-                        if (tutor_utils()->is_completed_course($course_id, $user->ID)) {
-                            $cert_url  = get_user_meta($user->ID, 'certificado_url', true);
-                            $cert_href = !empty($cert_url) ? esc_url($cert_url) : '#';
-                            $cert_html = '<a class="pe-cert-link" href="' . $cert_href . '" target="_blank">Descargar</a>';
-                        }
+                $cursos_ids = $wpdb->get_col($wpdb->prepare(
+                    "SELECT curso_id FROM {$wpdb->prefix}mass_inscripciones WHERE user_id = %d",
+                    $user->ID
+                ));
+
+                if (!empty($cursos_ids)) {
+                    $course_id = intval($cursos_ids[0]);
+
+                    $total_lecciones = (int) $wpdb->get_var($wpdb->prepare(
+                        "SELECT COUNT(*) FROM {$wpdb->posts} p
+                         JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+                         WHERE p.post_type = 'mass_leccion'
+                         AND p.post_status = 'publish'
+                         AND pm.meta_key = 'mass_curso_id'
+                         AND pm.meta_value = %d",
+                        $course_id
+                    ));
+
+                    $completadas = (int) $wpdb->get_var($wpdb->prepare(
+                        "SELECT COUNT(*) FROM {$wpdb->prefix}mass_progreso pr
+                         JOIN {$wpdb->postmeta} pm ON pr.leccion_id = pm.post_id
+                         WHERE pr.user_id = %d
+                         AND pr.completado = 1
+                         AND pm.meta_key = 'mass_curso_id'
+                         AND pm.meta_value = %d",
+                        $user->ID, $course_id
+                    ));
+
+                    $progress = $total_lecciones > 0 ? round(($completadas / $total_lecciones) * 100) : 0;
+
+                    $cert_url = get_user_meta($user->ID, 'certificado_url', true);
+                    if ($progress >= 100 && !empty($cert_url)) {
+                        $cert_html = '<a class="pe-cert-link" href="' . esc_url($cert_url) . '" target="_blank">Descargar</a>';
                     }
                 }
 
@@ -194,74 +217,83 @@ foreach ($usuarios as $t) {
 
 <!-- MODAL -->
 <div id="peModal" style="display:none;" class="pe-modal-overlay">
-        <div class="pe-modal-box" onclick="event.stopPropagation()">
+    <div class="pe-modal-box" onclick="event.stopPropagation()">
 
-            <div class="pe-modal-header">
-                <h3 id="peModalTitulo" class="pe-modal-titulo"></h3>
-                <button class="pe-modal-cerrar" onclick="peModalClose()">&#x2715;</button>
-            </div>
+        <div class="pe-modal-header">
+            <h3 id="peModalTitulo" class="pe-modal-titulo"></h3>
+            <button class="pe-modal-cerrar" onclick="peModalClose()">&#x2715;</button>
+        </div>
 
-            <div class="pe-modal-body">
-                <div class="pe-form-grid">
+        <div class="pe-modal-body">
+            <div class="pe-form-grid">
 
-                    <div class="pe-form-group">
-                        <label class="pe-label">Nombre completo</label>
-                        <input type="text" id="pe_nombre" class="pe-input" placeholder="Ej: Juan Pérez">
-                    </div>
-
-                    <div class="pe-form-group">
-                        <label class="pe-label">RUT</label>
-                        <input type="text" id="pe_rut" class="pe-input" placeholder="Ej: 12.345.678-9">
-                    </div>
-
-                    <div class="pe-form-group">
-                        <label class="pe-label">Correo electrónico</label>
-                        <input type="email" id="pe_email" class="pe-input" placeholder="correo@ejemplo.com">
-                    </div>
-
-                    <div class="pe-form-group">
-                        <label class="pe-label">Nombre de usuario</label>
-                        <input type="text" id="pe_login" class="pe-input" placeholder="usuario123">
-                    </div>
-
-                    <div class="pe-form-group">
-                        <label class="pe-label">Contraseña <span id="pe_pass_hint" style="font-size:12px;color:#7A8EAE;">(dejar vacío para no cambiar)</span></label>
-                        <input type="password" id="pe_password" class="pe-input" placeholder="••••••••">
-                    </div>
-
-                    <div class="pe-form-group">
-                        <label class="pe-label">Cargo</label>
-                        <select id="pe_cargo" class="pe-select">
-                            <option value="">— Seleccionar —</option>
-                            <option value="Bombero">Bombero</option>
-                            <option value="Bombero de bencina">Bombero de bencina</option>
-                            <option value="Supervisor">Supervisor</option>
-                            <option value="Operador">Operador</option>
-                            <option value="Técnico">Técnico</option>
-                            <option value="Administrativo">Administrativo</option>
-                        </select>
-                    </div>
-
-                    <div class="pe-form-group">
-                        <label class="pe-label">Estado</label>
-                        <select id="pe_estado" class="pe-select">
-                            <option value="activo">Activo</option>
-                            <option value="inactivo">Fuera de servicio</option>
-                        </select>
-                    </div>
-
+                <div class="pe-form-group">
+                    <label class="pe-label">Nombre completo</label>
+                    <input type="text" id="pe_nombre" class="pe-input" placeholder="Ej: Juan Pérez">
                 </div>
 
-                <div id="pe_msg" class="pe-msg" style="display:none;"></div>
+                <div class="pe-form-group">
+                    <label class="pe-label">RUT</label>
+                    <input type="text" id="pe_rut" class="pe-input" placeholder="Ej: 12.345.678-9">
+                </div>
+
+                <div class="pe-form-group">
+                    <label class="pe-label">Correo electrónico</label>
+                    <input type="email" id="pe_email" class="pe-input" placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="pe-form-group">
+                    <label class="pe-label">Nombre de usuario</label>
+                    <input type="text" id="pe_login" class="pe-input" placeholder="usuario123">
+                </div>
+
+                <div class="pe-form-group">
+                    <label class="pe-label">Contraseña <span id="pe_pass_hint" style="font-size:12px;color:#7A8EAE;">(dejar vacío para no cambiar)</span></label>
+                    <div class="pe-input-wrap">
+                        <input type="password" id="pe_password" class="pe-input" placeholder="••••••••">
+                        <button type="button" class="pe-eye" onclick="peTogglePass()" tabindex="-1">
+                            <svg id="pe-eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                                <line x1="1" y1="1" x2="23" y2="23"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pe-form-group">
+                    <label class="pe-label">Cargo</label>
+                    <select id="pe_cargo" class="pe-select">
+                        <option value="">— Seleccionar —</option>
+                        <option value="Bombero">Bombero</option>
+                        <option value="Bombero de bencina">Bombero de bencina</option>
+                        <option value="Supervisor">Supervisor</option>
+                        <option value="Operador">Operador</option>
+                        <option value="Técnico">Técnico</option>
+                        <option value="Administrativo">Administrativo</option>
+                    </select>
+                </div>
+
+                <div class="pe-form-group">
+                    <label class="pe-label">Estado</label>
+                    <select id="pe_estado" class="pe-select">
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Fuera de servicio</option>
+                    </select>
+                </div>
+
             </div>
 
-            <div class="pe-modal-footer">
-                <button class="pe-btn-cancelar" onclick="peModalClose()">Cancelar</button>
-                <button class="pe-btn-guardar" id="peBtnGuardar" onclick="peGuardar()">Guardar</button>
-            </div>
-
+            <div id="pe_msg" class="pe-msg" style="display:none;"></div>
         </div>
+
+        <div class="pe-modal-footer">
+            <button class="pe-btn-cancelar" onclick="peModalClose()">Cancelar</button>
+            <button class="pe-btn-guardar" id="peBtnGuardar" onclick="peGuardar()">Guardar</button>
+        </div>
+
     </div>
+</div>
 
 </main>
 

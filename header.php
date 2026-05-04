@@ -11,7 +11,7 @@
     <header class="site-header">
         <div class="header-inner">
             <div class="brand">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/mass-logo-1.png" alt="logo escudo azul de capacitaciones MASS" class="logo">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/mass-logo-1.png" alt="logo escudo azul de capacitaciones MASS" class="logo">
                 <span class="brand-name">capacitaciones MASS</span>
             </div>
             <?php if (is_user_logged_in() && !is_front_page()):
